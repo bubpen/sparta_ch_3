@@ -26,12 +26,12 @@ def post_create(request):
     context = {
         'form' : form
     }
-    return render(request, 'posts/post_create.html', context)
+    return render(request, 'posts/post_form.html', context)
 
 
 @login_required
 def post_confirm(request,pk):
-    post = Post.objects.get(pk = pk)
+    post = get_object_or_404(Post, pk = pk)
     context = {
         'post':post
     }
@@ -58,12 +58,11 @@ def post_detail(request,pk):
 @login_required
 @require_http_methods(['GET','POST'])
 def post_update(request, pk):
-    post = Post.objects.get(pk=pk)
+    post = get_object_or_404(Post, pk=pk)
     if request.method == "POST":
         form = PostForm(request.POST, instance=post)
         if form.is_valid():
             post = form.save(commit = False)
-            post.save()
             return redirect('posts:post_detail', post.pk)
     else:
         form = PostForm(instance = post)
@@ -71,4 +70,4 @@ def post_update(request, pk):
         'form':form,
         'post':post
     }
-    return render(request, 'posts/update.html',context)
+    return render(request, 'posts/post_form.html',context)

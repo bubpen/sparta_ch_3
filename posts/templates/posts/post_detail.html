@@ -6,12 +6,21 @@
 <hr>
 <p>{{ post.content }}</p>
 {% if user == post.author %}
-<a href = "{% url 'posts:post_update' post.pk %}">수정</a>
-<a href = "{% url 'posts:post_confirm' post.pk %}">글 삭제</a>
+
+<a href = "{% url 'posts:post_update' post.pk %}">
+    <button type = 'submit'>수정</button>
+</a>
+<br>
+<a href = "{% url 'posts:post_confirm' post.pk %}">
+    <button type = 'submit'>글 삭제</button>
+</a>
 {% endif %}
+<hr>
 <a href = "{% url 'posts:post_list' %}">목록으로</a>
+<hr>
 <h2>댓글({{ comments.count }})</h2>
 {% for comment in comments %}
+<hr>
 <p>{{ comment.comment }}</p>
 {% endfor %}
 {% endblock content %}
