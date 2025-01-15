@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{% if request.user.is_authenticated %}
+<a href = "{% url 'posts:post_create' %}"> 글 작성하기</a>
+{% else %}
+<a href = "{% url 'users:login' %}">로그인하기</a>
+{% endif %}
+
+{% for post in posts %}
+<hr>
+<a href = "{% url 'posts:post_detail' post.pk %}">[{{ post.id }}]{{ post.title }}</a> 
+
+{% endfor %}
+
+{% endblock content %}

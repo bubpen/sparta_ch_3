@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>{{ user.username }}</h1>
+<p>소개글 : {{ user.bio }}</p>
+{% if request.user.pk == user.pk %}
+<a href = "{% url 'users:profile_update' user.pk %}">프로필 변경</a>
+{% endif %}
+{% endblock content %}

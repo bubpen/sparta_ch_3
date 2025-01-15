@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>{{ post.title }}</h1>
+<h3>작성자 : {{ post.author }}</h3>
+<hr>
+<p>{{ post.content }}</p>
+{% if user == post.author %}
+<a href = "{% url 'posts:post_update' post.pk %}">수정</a>
+<a href = "{% url 'posts:post_confirm' post.pk %}">글 삭제</a>
+{% endif %}
+<a href = "{% url 'posts:post_list' %}">목록으로</a>
+<h2>댓글({{ comments.count }})</h2>
+{% for comment in comments %}
+<p>{{ comment.comment }}</p>
+{% endfor %}
+{% endblock content %}
