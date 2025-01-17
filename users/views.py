@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
+from .forms import CustomUserCreationForm, CustomAuthenticationForm
 from django.contrib.auth import login as auth_login, logout as auth_logout
 from django.views.decorators.http import require_POST
 from django.contrib.auth.decorators import login_required
@@ -7,14 +7,14 @@ from users.models import User
 
 def login(request):
     if request.method == "POST":
-        form = AuthenticationForm(data = request.POST)
+        form = CustomAuthenticationForm(data = request.POST)
         if form.is_valid():
             auth_login(request, form.get_user())
             return redirect('posts:post_list')
         else:
             print('form 검증 실패 : ',form.errors)
     else:
-        form = AuthenticationForm()
+        form = CustomAuthenticationForm()
     context = {'form' : form}   
     return render(request, 'users/login.html', context)
 
@@ -25,13 +25,13 @@ def logout(request):
     
 def signup(request):
     if request.method == "POST":
-        form = UserCreationForm(request.POST)
+        form = CustomUserCreationForm(request.POST)
         if form.is_valid():
             user = form.save()
             auth_login(request, user)
             return redirect('posts:post_list')
     else:
-        form = UserCreationForm()
+        form = CustomUserCreationForm()
     context = {
         'form': form
     }

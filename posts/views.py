@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from posts.models import Post
-from posts.forms import PostForm, CommentForm
+from posts.forms import PostForm
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_http_methods, require_POST
 
@@ -37,7 +37,7 @@ def post_confirm(request,pk):
     }
     return render(request, 'posts/post_confirm.html', context)
 
-
+@login_required
 @require_POST
 def post_delete(request,pk):
     if request.user.is_authenticated:
@@ -47,11 +47,9 @@ def post_delete(request,pk):
 
 def post_detail(request,pk):
     post = get_object_or_404(Post, pk = pk)
-    comments = post.comments.all()
     context = {
         'post':post,
-        'comments':comments,
-    }
+        }
     return render(request, 'posts/post_detail.html', context)
 
 

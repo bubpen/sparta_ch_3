@@ -9,12 +9,14 @@
     <div class="navbar">
         {% if request.user.is_authenticated %}
         <h3>안녕하세요, {{ user }}님</h3>
-        <a href = "{% url 'users:profile' user.pk %}">프로필</a>
+        <a href = "{% url 'users:profile' user.pk %}"><button>프로필</button></a>
         <form action = "{% url 'users:logout' %}" method = "POST">
             {% csrf_token %}
             <input type = 'submit' value = '로그아웃'>
         </form>
+
         {% else %}
+        
         <a href = "{% url 'users:login' %}">로그인</a>
         <a href = "{% url 'users:signup' %}">회원가입</a>
         {% endif %}
