@@ -3,9 +3,6 @@
 {% block content %}
 <form method = "POST">
     {% csrf_token %}
-    <p>현재 소개글 : {{ bio }}</p>
-    <label for = 'bio'>소개글 수정</label>
-    <input type = 'text' id = 'bio' name = 'bio'>
-    <button type = 'submit'>수정</button>
+    {{ form.as_p}}
 </form>
 {% endblock content %}

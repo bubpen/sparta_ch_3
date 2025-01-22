@@ -3,9 +3,11 @@
 {% block content %}
 <h1>{{ post.title }}</h1>
 <h3>작성자 : {{ post.author }}</h3> 
-<h3>작성일 : {{ post.created_at }} 수정일 : {{ post.updated_at }}</h3>
+<h3>작성일 : {{ post.created_at }} / 수정일 : {{ post.updated_at }}</h3>
 <hr>
 <p>{{ post.content }}</p>
+
+
 {% if user == post.author %}
 
 <a href = "{% url 'posts:post_update' post.pk %}">
@@ -15,6 +17,38 @@
 <a href = "{% url 'posts:post_confirm' post.pk %}">
     <button type = 'submit'>글 삭제</button>
 </a>
+
+{% endif %}
+
+
+<form action="{% url 'posts:like' post.pk %}" method="POST">
+    {% csrf_token %}
+    {% if request.user in post.like_users.all %}
+    <input type = 'submit' value = '좋아요 취소'>
+    {% else %}
+    <input type = 'submit' value = '좋아요'>
+    {% endif %}
+</form>
+
+<hr>
+<h2>댓글({{ comments_count }})</h2>
+
+<form action = "{% url 'posts:comments_create' post.pk %}" method = 'POST'>
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input type = 'submit' value = '작성'>
+</form>
+
+{% for comment in comments %}
+
+<p>{{ comment.comment }} - {{ comment.author }} ({{ comment.created_at }})</p>
+
+{% if user == comment.author %}
+<form action = "{% url 'posts:comments_delete' post.pk comment.pk %}" method = "POST">
+    {% csrf_token %}
+    <input type = 'submit' value = '삭제'>
+</form>
 {% endif %}
 <hr>
+{% endfor %}
 {% endblock content %}
