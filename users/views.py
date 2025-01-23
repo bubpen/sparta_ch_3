@@ -55,7 +55,7 @@ def profile(request, pk):
 @login_required
 def profile_update(request, pk):
     if request.method == 'POST':
-        form = UserProfileForm(request.POST, instance=request.user)
+        form = UserProfileForm(request.POST, request.FILES, instance=request.user)
         if form.is_valid():
             form.save()
             return redirect('users:profile', pk)

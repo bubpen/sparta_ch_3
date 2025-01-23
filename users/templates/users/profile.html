@@ -1,9 +1,11 @@
 {% extends "base.html" %}
-
 {% block content %}
 <h1>{{ user.username }}</h1>
 
 <p>{{ user.last_name }}-{{ user.first_name }} </p>
+{% if user.image %}
+<p><img src="{{ user.image.url }}" alt = "{{ user.image.url }}"></p>
+{% endif %}
 <p>소개글 : {{ user.bio }}</p>
 {% if request.user.pk == user.pk %}
 <a href = "{% url 'users:profile_update' user.pk %}">프로필 변경</a>

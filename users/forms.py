@@ -18,4 +18,4 @@ class CustomAuthenticationForm(AuthenticationForm):
 class UserProfileForm(forms.ModelForm):
     class Meta:
         model = User
-        fields = ('bio', )
+        fields = ('bio', 'image',)
